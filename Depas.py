@@ -70,7 +70,7 @@ elif st.session_state.pagina == "registro":
     if noches > 0:
         st.success(f"🌙 Noches: {noches} | 💰 TOTAL: ${total}")
     
-    if st.button("💾 GUARDAR AHORA", fg_color="green", use_container_width=True):
+if st.button("💾 GUARDAR AHORA", use_container_width=True, type="primary"):
         if cliente and depa and noches > 0:
             nueva = {
                 "Dueño": dueño, "Cliente": cliente, "Propiedad": depa,
