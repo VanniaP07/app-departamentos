@@ -78,7 +78,7 @@ elif st.session_state.pagina.startswith("admin_"):
     st.header(f"📋 Reservas de {filtro}")
     
     # LEER DIRECTO DESDE EL EXCEL
-    df = conn.read(spreadsheet=URL_EXCEL)
+    df = conn.read()
     if not df.empty:
         if filtro != "Todos":
             df = df[df["Dueño"] == filtro]
