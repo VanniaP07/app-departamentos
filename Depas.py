@@ -1,4 +1,3 @@
-import customtkinter as ctk
 from tkcalendar import Calendar
 from tkinter import messagebox
 from datetime import datetime
