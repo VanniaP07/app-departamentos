@@ -4,6 +4,8 @@ from tkinter import messagebox
 from datetime import datetime
 import json
 import os
+import streamlit as st
+import pandas as pd
 
 class AppRentas(ctk.CTk):
     def __init__(self):
