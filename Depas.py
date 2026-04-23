@@ -5,13 +5,13 @@ from datetime import datetime
 # --- CONFIGURACIÓN ---
 st.set_page_config(page_title="Rentas Pro", layout="centered")
 
-# "Cerebro" para recordar datos y en qué pantalla estamos
+# Cerebro de la App
 if 'reservas' not in st.session_state:
     st.session_state.reservas = []
 if 'pagina' not in st.session_state:
     st.session_state.pagina = "menu"
 
-# --- FUNCIONES DE NAVEGACIÓN ---
+# Función de Navegación
 def ir_a(pagina):
     st.session_state.pagina = pagina
 
@@ -19,7 +19,6 @@ def ir_a(pagina):
 if st.session_state.pagina == "menu":
     st.title("🏨 MENÚ PRINCIPAL")
     
-    # Botones grandes de acceso directo
     if st.button("📝 REALIZAR NUEVA RESERVA", use_container_width=True):
         ir_a("registro")
         st.rerun()
@@ -31,7 +30,6 @@ if st.session_state.pagina == "menu":
     st.markdown("---")
     st.write("🔍 **VER POR TRABAJADOR:**")
     
-    # Columnas para los trabajadores
     c1, c2, c3 = st.columns(3)
     if c1.button("👤 Jaky", use_container_width=True): 
         ir_a("admin_Jaky")
@@ -51,7 +49,6 @@ elif st.session_state.pagina == "registro":
     
     st.header("📝 Nueva Reservación")
     
-    # NOTA: Quitamos el "st.form" para que los cálculos sean instantáneos al hacer clic
     dueño = st.selectbox("Asignar a:", ["Jaky", "Miriam", "Pepillo"])
     cliente = st.text_input("Nombre del cliente")
     depa = st.text_input("Departamento / Casa")
@@ -63,14 +60,15 @@ elif st.session_state.pagina == "registro":
     
     transporte = st.checkbox("Transporte Internacional (+$100)")
     
-    # CÁLCULO INSTANTÁNEO (Sin clics extra)
+    # Cálculo automático
     noches = (salida - llegada).days
     total = (max(0, noches) * precio) + (100 if transporte else 0)
     
     if noches > 0:
         st.success(f"🌙 Noches: {noches} | 💰 TOTAL: ${total}")
-    
-if st.button("💾 GUARDAR AHORA", use_container_width=True, type="primary"):
+
+    # BOTÓN CORREGIDO (Ahora está dentro del 'elif registro')
+    if st.button("💾 GUARDAR AHORA", use_container_width=True, type="primary"):
         if cliente and depa and noches > 0:
             nueva = {
                 "Dueño": dueño, "Cliente": cliente, "Propiedad": depa,
@@ -78,7 +76,7 @@ if st.button("💾 GUARDAR AHORA", use_container_width=True, type="primary"):
                 "Fin": salida.strftime("%d/%m/%y"), "Total": f"${total}"
             }
             st.session_state.reservas.append(nueva)
-            st.toast("✅ ¡Guardado!") # Mensaje rápido en la esquina
+            st.toast("✅ ¡Guardado!")
             ir_a("menu")
             st.rerun()
         else:
